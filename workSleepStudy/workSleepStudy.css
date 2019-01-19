@@ -1,0 +1,69 @@
+	html, body {
+		width:100%;
+		margin:0;
+		padding:0;
+	}
+
+	#title {
+		background-color:rgba(190, 193, 226, 0.5);
+		padding:10px;
+	}
+
+	.begin {
+		font-size: 2em;
+	}
+	
+	#questionaire {
+		text-align:center;
+		font-size:1.4em;
+		background-color:;
+		padding:20px;
+	}
+	
+	.quiz {
+		display:none;
+		padding:5%;
+	}
+	
+	.fadeIn {
+		display:block;
+	}
+	
+	.op {
+		border:1px solid #bec1e2;
+		border-radius:3px;
+		padding:5px;
+		margin:5px;
+	}
+	
+	.op:hover {
+		background-color:#bec1e2;
+		cursor:pointer;
+	}
+	
+	.op:visited {
+		background-color: #FF0000;
+	}
+	
+	#day, #event {
+		font-size:1.5em;
+	}
+	
+	#schedule, #schedTable {
+		width:100%;
+	}
+	
+	#timeLabel {
+		vertical-align:center;
+	}
+	
+	#schedTable td {
+		background-color:#F0F0F0;
+		width:10%;
+		display:auto;
+	}
+	
+	#dayNames td {
+		text-align:center;
+		width:10%;
+	}

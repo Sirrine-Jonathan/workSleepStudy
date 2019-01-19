@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WorkSleepStudy</title>
+	<link href="workSleepStudy.css" rel="stylesheet"/>
+	<link href="../sharedStyle.css" rel="stylesheet"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="workSleepStudy.js"></script>
+</head>
+<body>
+	<div id="title">
+		<h1><span>Work</span> <span>Sleep</span> <span>Study</span> <span class="op" id="restart" style="float:right">Main Menu</span></h1>
+	</div>
+	<div id="questionaire" class="questionDiv" ng-app="myApp" ng-controller="myCtrl">
+		<div id="info" class="fadeIn quiz">
+			<!--Information about how it works and its purpose-->
+			<div>
+				<p id="workReport"></p>
+				<p id="sleepReport"></p>
+				<p id="studyReport"></p>
+			</div>
+			<div id=mainMenu">
+				<span class="op begin" id="beginWork">Work</span>
+				<span class="op begin" id="beginSleep">Sleep</span>
+				<span class="op begin" id="beginStudy">Credits</span>
+				<span class="op begin" id="beginBuffer">Buffers</span>
+				<span class="op begin" id="beginStarter">Starter</span>
+				<span class="op begin" id="load" style="display:none">Load</span>
+			</div>
+		</div>
+		<div id="workQuiz" class="quiz">
+			<h3 >What hour do you <span id="event">start</span> work on <span id="day">Monday</span>?</h3>
+			<div class="options" id="hourOption" ng-model="hourOption">
+				<span class="op hour" data-ng-click="hourOption = 1">1</span>
+				<span class="op hour" data-ng-click="hourOption = 2">2</span>
+				<span class="op hour" data-ng-click="hourOption = 3">3</span>
+				<span class="op hour" data-ng-click="hourOption = 4">4</span>
+				<span class="op hour" data-ng-click="hourOption = 5">5</span>
+				<span class="op hour" data-ng-click="hourOption = 6">6</span>
+				<span class="op hour" data-ng-click="hourOption = 7" active >7</span>
+				<span class="op hour" data-ng-click="hourOption = 8">8</span>
+				<span class="op hour" data-ng-click="hourOption = 9">9</span>
+				<span class="op hour" data-ng-click="hourOption = 10">10</span>
+				<span class="op hour" data-ng-click="hourOption = 11">11</span>
+				<span class="op hour" data-ng-click="hourOption = 12">12</span>
+			</div>
+			<h3 class="question">Is that 
+				<span class="op hourSet">{{ hourOption }}:00am</span>
+				<span class="op hourSet">{{ hourOption }}:30am</span>
+				<span class="op hourSet">{{ hourOption }}:00pm</span>
+				<span class="op hourSet">{{ hourOption }}:30pm</span>
+				?
+			</h3>
+			<h3><span class="op" id="skip">Skip</span> this day if you are not scheduled for it.</h3>
+		</div>
+		
+		<div id="sleepQuiz" class="quiz">
+			<h3 id="question" data-type="start">What time do you start trying to get to bed?</h3>
+			<div class="options" id="hourOption" ng-model="hourOption">
+				<span class="op hour" data-ng-click="hourOption = 1">1</span>
+				<span class="op hour" data-ng-click="hourOption = 2">2</span>
+				<span class="op hour" data-ng-click="hourOption = 3">3</span>
+				<span class="op hour" data-ng-click="hourOption = 4">4</span>
+				<span class="op hour" data-ng-click="hourOption = 5">5</span>
+				<span class="op hour" data-ng-click="hourOption = 6">6</span>
+				<span class="op hour" data-ng-click="hourOption = 7" active >7</span>
+				<span class="op hour" data-ng-click="hourOption = 8">8</span>
+				<span class="op hour" data-ng-click="hourOption = 9">9</span>
+				<span class="op hour" data-ng-click="hourOption = 10">10</span>
+				<span class="op hour" data-ng-click="hourOption = 11">11</span>
+				<span class="op hour" data-ng-click="hourOption = 12">12</span>
+			</div>
+			<h3 class="question">Is that 
+				<span class="op sleepSet">{{ hourOption }}:00am</span>
+				<span class="op sleepSet">{{ hourOption }}:30am</span>
+				<span class="op sleepSet">{{ hourOption }}:00pm</span>
+				<span class="op sleepSet">{{ hourOption }}:30pm</span>
+				?
+			</h3>
+		</div>
+		
+		<div id="studyQuiz" class="quiz">
+			<div id="errMsg"></div>
+			<h3>How many credits are you taking this semester?</h3>
+			<div class="options" id="hourOption">
+				<span class="op studySet">0</span>
+				<span class="op studySet">1</span>
+				<span class="op studySet">2</span>
+				<span class="op studySet">3</span>
+				<span class="op studySet">4</span>
+				<span class="op studySet">5</span>
+				<span class="op studySet">6</span>
+				<span class="op studySet">7</span>
+				<span class="op studySet">8</span>
+				<span class="op studySet">9</span>
+				<span class="op studySet">10</span>
+				<span class="op studySet">11</span>
+				<span class="op studySet">12</span>
+				<span class="op studySet">13</span>
+				<span class="op studySet">14</span>
+				<span class="op studySet">15</span>
+				<span class="op studySet">16</span>
+				<span class="op studySet">17</span>
+				<span class="op studySet">18</span>
+				<span class="op studySet">19</span>
+				<span class="op studySet">20</span>
+				<span class="op studySet">21</span>
+				<span class="op studySet">22</span>
+				<span class="op studySet">23</span>
+				<span class="op studySet">24</span>
+			</div>
+		</div>
+		
+		<div id="bufferQuiz" class="quiz">
+			<h3 id="pregunta">How much time would you like before and after each study block?</h3>
+			<div class="options" id="bufferOption">
+			<!--
+				<span class="op bufferSet">No time</span>
+				<span class="op bufferSet">Half hour</span>
+				<span class="op bufferSet">One hour</span>
+				<span class="op bufferSet">Hour &amp; a half</span>
+			-->
+			</div>
+		</div>
+		<div id="startTimeQuiz" class="quiz">
+			<h3 id="">When do you want to begin scheduling study time?</h3>
+			<div class="options" id="startOption">
+				<span class="op startSet">Beginning of Week</span>
+				<span class="op startSet">Today</span>
+				<span class="op startSet">Tomorrow</span>
+			</div>
+			<h3 id="">How many hours of homework have you already done for this week?</h3>
+			<div class="options" id="hoursAlreadyStudiedOption">
+				<span class="op alreadyStudiedSet">0</span>
+				<span class="op alreadyStudiedSet">1</span>
+				<span class="op alreadyStudiedSet">2</span>
+				<span class="op alreadyStudiedSet">3</span>
+				<span class="op alreadyStudiedSet">4</span>
+				<span class="op alreadyStudiedSet">5</span>
+				<span class="op alreadyStudiedSet">6</span>
+				<span class="op alreadyStudiedSet">7</span>
+				<span class="op alreadyStudiedSet">8</span>
+				<span class="op alreadyStudiedSet">9</span>
+				<span class="op alreadyStudiedSet">10</span>
+				<span class="op alreadyStudiedSet">11</span>
+				<span class="op alreadyStudiedSet">12</span>
+				<span class="op alreadyStudiedSet">13</span>
+				<span class="op alreadyStudiedSet">14</span>
+				<span class="op alreadyStudiedSet">15</span>
+				<span class="op alreadyStudiedSet">16</span>
+				<span class="op alreadyStudiedSet">17</span>
+				<span class="op alreadyStudiedSet">18</span>
+				<span class="op alreadyStudiedSet">19</span>
+				<span class="op alreadyStudiedSet">20</span>
+				<span class="op alreadyStudiedSet">21</span>
+				<span class="op alreadyStudiedSet">22</span>
+				<span class="op alreadyStudiedSet">23</span>
+				<span class="op alreadyStudiedSet">24</span>
+			</div>
+		</div>
+		
+		<div id="finalDataDiv">
+			<h4 id="studyMsg"></h4>
+		</div>
+	</div>
+	<div id="schedule">
+		<table id="schedTable">
+			<tr id="dayNames">
+				<td></td>
+				<td>Monday</td>
+				<td>Tuesday</td>
+				<td>Wednesday</td>
+				<td>Thursday</td>
+				<td>Friday</td>
+				<td>Saturday</td>
+				<td>Sunday</td>
+			</tr>
+			<tr>
+				<td class="timeLabel">12:00am</td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">12:30am</td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+				<td class=""></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">01:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">01:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">02:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">02:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">03:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">03:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">04:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">04:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">05:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">05:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">06:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">06:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">07:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">07:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">08:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">08:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">09:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">09:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">10:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">10:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">11:00am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">11:30am</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">12:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">12:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">01:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">01:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">02:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">02:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">03:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">03:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">04:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">04:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">05:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">05:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">06:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">06:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">07:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">07:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">08:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">08:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">09:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel">09:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel" >10:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel" >10:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel" >10:00pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+			<tr>
+				<td class="timeLabel" >11:30pm</td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+				<td class="" ></td>
+			</tr>
+		</table>
+	</div>
+	<div class="links">
+		<a href="../index.html">Home</a>
+		<a href="../nextDueDate/nextDueDate.html">Next Due Date</a>
+	</div>
+</body>
+<html>
